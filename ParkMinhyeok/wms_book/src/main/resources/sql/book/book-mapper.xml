@@ -8,5 +8,74 @@
         <result column="created_at" property="createdAt"/>
     </resultMap>
     <select id="findAll" resultMap="bookDtoMap">
+        select
+            *
+        from
+            tbl_book
     </select>
+
+    <select id="findByBookId" resultMap="bookDtoMap">
+        select
+            *
+        from
+            tbl_book
+        where
+            book_id = #{bookId}
+    </select>
+
+    <select id="findByBookTitle" resultMap="bookDtoMap">
+        select
+            *
+        from
+            tbl_book
+        where
+            title = #{title}
+    </select>
+
+    <select id="findByBookAuthor" resultMap="bookDtoMap">
+        select
+            *
+        from
+            tbl_book
+        where
+            author = #{author}
+    </select>
+
+    <select id="findByCategory" resultMap="bookDtoMap">
+        select
+            *
+        from
+            tbl_book
+        where
+            category = #{category}
+    </select>
+
+    <insert id="insertBook" useGeneratedKeys="true" keyProperty="bookId">
+        insert into
+            tbl_book
+        values (
+            null, #{title}, #{author}, #{description}, #{price}, #{category}, #{createdAt}
+        )
+    </insert>
+
+    <update id="updateBook">
+        update
+            tbl_book
+        set
+            title = #{book.title}, author = #{book.author}, description = #{book.description}, price = #{book.price}, category = #{book.category}
+        where
+            book_id = #{bookId}
+    </update>
+
+    <delete id="deleteInventoryByBookId">
+        DELETE FROM tbl_inventory
+        WHERE book_id = #{bookId}
+    </delete>
+
+    <delete id="deleteBook">
+        delete from
+            tbl_book
+        where
+            book_id = #{bookId}
+    </delete>
 </mapper>

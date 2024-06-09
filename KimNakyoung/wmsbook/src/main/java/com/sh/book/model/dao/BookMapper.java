@@ -12,4 +12,12 @@ public interface BookMapper {
     List<BookDto> findByCategory(String category); // 상세검색중 카테고리로 검색
     List<BookDto> findByPrice(int price); // 상세검색중 카테고리로 검색
 
+    // 쿼리에 전달하는 객체는 무조건 1개여야한다. 묶어서 줘라! Dto 형식 아니면 키 벨류 값이라도 !
+    // 지금은 Dto방식 씀.
+    int insertBook(BookDto bookDto);
+
+    int deleteBook(int bookId); // 테스트 삽입한거 삭제용 메서드
+    int updateBook(BookDto bookDto);
+
+    List<BookDto> findByBookIdList(int bookId);
 }

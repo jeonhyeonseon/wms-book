@@ -142,6 +142,7 @@ public class BookView {
         System.out.print("▶ 저자를 입력해주세요 : ");
         String author = sc.next();
         System.out.print("▶ 설명을 입력해주세요 ");
+        sc.next();
         String description = sc.nextLine();
         System.out.print("▶ 가격을 입력해주세요 :");
         int price = sc.nextInt();

@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS tbl_user CASCADE;
 DROP TABLE IF EXISTS tbl_inventory CASCADE;
 DROP TABLE IF EXISTS tbl_book CASCADE;
 
-select * from tbl_book;
 CREATE TABLE tbl_user (
     user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 ID',
     username VARCHAR(50) UNIQUE NOT NULL COMMENT '사용자 이름',

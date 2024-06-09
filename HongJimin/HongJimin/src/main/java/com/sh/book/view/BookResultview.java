@@ -2,6 +2,7 @@ package com.sh.book.view;
 
 import com.sh.book.model.entity.Book;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class BookResultview {
@@ -21,7 +22,7 @@ public class BookResultview {
                                 book.getDescription() + "\t" +
                                 book.getPrice() + "\t" +
                                 book.getCategory() + "\t" +
-                                book.getBookCreatedAt()
+                                book.getCreatedAt()
                 );
             }
         }
@@ -34,13 +35,13 @@ public class BookResultview {
             System.out.println("============================");
             System.out.println(" 🔍 조회한 도서의 정보입니다. ");
             System.out.println("============================");
-            System.out.println("BookId : " + book.getBookId());
-            System.out.println("BookTitle : " + book.getTitle());
-            System.out.println("Author : " + book.getAuthor());
-            System.out.println("Description : " + book.getDescription());
-            System.out.println("Price : " + book.getPrice());
-            System.out.println("Category : " + book.getCategory());
-            System.out.println("BookCreatedAt : " + book.getBookCreatedAt());
+            System.out.println("도서 아이디 : " + book.getBookId());
+            System.out.println("도서 제목 : " + book.getTitle());
+            System.out.println("저자 : " + book.getAuthor());
+            System.out.println("도서 설명 : " + book.getDescription());
+            System.out.println("가격 : " + book.getPrice());
+            System.out.println("카테고리 : " + book.getCategory());
+            System.out.println("출판일 : " + book.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")));
             System.out.println("============================");
         }
     }
@@ -60,7 +61,7 @@ public class BookResultview {
                                 book.getDescription() + "\t" +
                                 book.getPrice() + "\t" +
                                 book.getCategory() + "\t" +
-                                book.getBookCreatedAt()
+                                book.getCreatedAt()
                 );
             }
         }
@@ -81,7 +82,7 @@ public class BookResultview {
                                 book.getDescription() + "\t" +
                                 book.getPrice() + "\t" +
                                 book.getCategory() + "\t" +
-                                book.getBookCreatedAt()
+                                book.getCreatedAt()
                 );
             }
         }
