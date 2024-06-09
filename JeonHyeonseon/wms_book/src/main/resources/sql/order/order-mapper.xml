@@ -17,11 +17,45 @@
             #{orderItemId}, #{orderId}, #{bookId}, #{quantity}
         )
     </insert>
+    <select id="findByOrderId" resultMap="orderDtoMap">
+        select
+            *
+        from
+            tbl_order o
+                join tbl_order_item toi
+                    on o.order_id = toi.order_id
+                join tbl_book tb
+                    on toi.book_id = tb.book_id
+        where
+            o.order_id = #{orderId}
+    </select>
+
+    <resultMap id="bookDto" type="bookDot">
+        <id column="book_id" property="bookId"/>
+        <result column="title" property="title"/>
+        <result column="author" property="author"/>
+        <result column="description" property="description"/>
+        <result column="price" property="price"/>
+        <result column="category" property="category"/>
+        <result column="created_at" property="createdAt"/>
+    </resultMap>
+
     <resultMap id="orderDtoMap" type="orderDto">
+        <!-- orderId : PK컬럼 매핑용 -->
         <id column="order_id" property="orderId"/>
+        <!-- result : 그외 컬럼 매핑용 -->
         <result column="orderer_name" property="ordererName"/>
         <result column="orderer_address" property="ordererAddress"/>
         <result column="order_date" property="orderDate"/>
         <result column="status" property="status"/>
+        <!-- 1:N관계의 테이블 행 매핑 -->
+        <collection property="orderItemList" ofType="orderItemDto">
+            <id column="order_item_id" property="orderItemId"/>
+            <result column="order_id" property="orderId"/>
+            <result column="book_id" property="bookId"/>
+            <result column="quantity" property="quantity"/>
+            <!-- 1:1관계의 테이블 행 매핑 -->
+            <association property="book" resultMap="bookDto"/>
+        </collection>
     </resultMap>
 </mapper>

@@ -1,12 +1,10 @@
 package com.sh.order.view;
 
-import com.sh.book.controller.BookController;
 import com.sh.order.controller.OrderController;
 import com.sh.order.model.dto.OrderDto;
 import com.sh.order.model.dto.OrderItemDto;
 import com.sh.order.model.dto.Status;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,7 +19,8 @@ public class OrderView {
                     [주문 메뉴 선택]
                 =====================
                      1. 주문 생성
-                     2. 주문 상태
+                     2. 주문 조회
+                     3. 주문 상세 조회
                      0. 돌아가기
                 =====================
                 입력 : """;
@@ -31,7 +30,11 @@ public class OrderView {
             case "1" :
                 inputOrderBook();
                 break;
-            case "2" : break;
+            case "2" :
+                findOrderByStatus();
+                break;
+            case "3" :
+                findByOrderId();
             case "0" : return;
             default:
                 System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
@@ -43,7 +46,6 @@ public class OrderView {
         System.out.println("---------------------");
         System.out.print("이름 : ");
         String ordererName = sc.nextLine();
-        sc.nextLine();
         System.out.print("주소 : ");
         String ordererAddress = sc.nextLine();
 
@@ -66,9 +68,35 @@ public class OrderView {
             if(sc.next().toUpperCase().charAt(0) != 'y') {
                 break;
             }
+            // 확인용
+            System.out.println(bookId + " " + quantity + " ");
         }
+        // 확인용
+        System.out.println(ordererName + " " +  ordererAddress + " ");
         // 주문요청 (OrderController 메시지 전달)
         OrderDto orderDto = new OrderDto(0, ordererName,ordererAddress, null, Status.주문확인중, orderItemList);
         orderController.createOrder(orderDto);
+        System.out.println("주문번호 : " + orderDto.getOrderId());
+    }
+
+    private void findOrderByStatus() {
+        System.out.println("    [주문 상태 조회] ");
+        System.out.println("---------------------");
+        System.out.print("주문 상태 : ");
+//        for ()
+    }
+
+    private void findByOrderId() {
+        System.out.println("   [ 주문 상세 조회 ] ");
+        System.out.println("---------------------");
+        System.out.print("주문 번호 : ");
+        int orderId = sc.nextInt();
+        sc.nextLine();
+
+        OrderDto orderDto = orderController.findByOrderId(orderId);
+        if (orderDto == null) {
+            System.out.println("해당 상품의 주문번호가 존재하지 않습니다.");
+        }
+        ResultOrderView.displayOrderById(orderDto);
     }
 }

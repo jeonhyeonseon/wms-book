@@ -56,4 +56,16 @@ class OrderMapperTest {
         // given
 
     }
+
+    @DisplayName("1:N관계(collection), 1:1관계(association)태그로 처리할 수 있다.")
+    @Test
+    void findOrderById() {
+        // given
+        int orderId = 1;
+        // when
+        OrderDto orderDto = orderMapper.findByOrderId(orderId);
+        // then
+        assertThat(orderDto).isNotNull();
+        assertThat(orderDto.getOrderItemList()).isNotNull().isNotEmpty();
+    }
 }

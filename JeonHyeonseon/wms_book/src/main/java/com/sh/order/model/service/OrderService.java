@@ -5,6 +5,8 @@ import com.sh.order.model.dto.OrderDto;
 import com.sh.order.model.dto.OrderItemDto;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.List;
+
 import static com.sh.common.MyBatisTemplate.getSqlSession;
 
 public class OrderService {
@@ -28,5 +30,15 @@ public class OrderService {
             sqlSession.close();
         }
         return 0;
+    }
+
+    public OrderDto findByOrderId(int orderId) {
+        SqlSession sqlSession = getSqlSession();
+        OrderMapper orderMapper = sqlSession.getMapper(OrderMapper.class);
+        try {
+            return orderMapper.findByOrderId(orderId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
