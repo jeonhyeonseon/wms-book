@@ -1,13 +1,12 @@
 package com.sh.order.model.dao;
 
 import com.sh.order.model.dto.OrderDto;
+import com.sh.order.model.dto.Status;
 import org.apache.ibatis.session.SqlSession;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.sh.common.MyBatisTemplate.getSqlSession;
 import static com.sh.order.model.dto.Status.배송준비중;
@@ -57,7 +56,22 @@ class OrderMapperTest {
 
     }
 
-    @DisplayName("1:N관계(collection), 1:1관계(association)태그로 처리할 수 있다.")
+    @DisplayName("주문상태로 주문 정보 조회")
+    @Test
+    void findOrderByStatus() {
+        // given
+        Status status = Status.배송준비중;
+        // when
+        List<OrderDto> orderList = orderMapper.findOrderByStatus(status);
+        // then
+        assertThat(orderList).isNotNull();
+        assertThat(orderList).isNotEmpty();
+        for (OrderDto orderDto : orderList) {
+            assertThat(orderDto.getStatus()).isEqualTo(status);
+        }
+    }
+
+    @DisplayName("주문번호로 주문 정보 조회")
     @Test
     void findOrderById() {
         // given

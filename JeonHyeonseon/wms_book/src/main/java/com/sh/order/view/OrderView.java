@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.sh.order.model.dto.Status.*;
+
 public class OrderView {
     private OrderController orderController = new OrderController();
 
@@ -31,7 +33,7 @@ public class OrderView {
                 inputOrderBook();
                 break;
             case "2" :
-                findOrderByStatus();
+                searchOrder();
                 break;
             case "3" :
                 findByOrderId();
@@ -40,12 +42,38 @@ public class OrderView {
                 System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
         }
     }
+
+    private void searchOrder() {
+        String menu = """
+                    [주문 상태 조회]
+                =====================
+                     1. 주문확인중
+                     2. 배송준비중
+                     3. 발송완료
+                     4. 배송중
+                     5. 배송완료
+                     6. 주문취소
+                =====================
+                입력 : """;
+        System.out.print(menu);
+        String choice = sc.next();
+        switch (choice) {
+            case "1" : orderController.findOrderByStatus(Status.주문확인중); break;
+            case "2" : orderController.findOrderByStatus(Status.배송준비중); break;
+            case "3" : orderController.findOrderByStatus(Status.발송완료); break;
+            case "4" : orderController.findOrderByStatus(Status.배송중); break;
+            case "5" : orderController.findOrderByStatus(Status.배송완료); break;
+            case "6" : orderController.findOrderByStatus(Status.주문취소); break;
+        }
+    }
+
     private void inputOrderBook() {
         System.out.println("👉 주문할 도서를 입력해주세요");
         System.out.println("  [ 주문자 정보 입력 ]");
         System.out.println("---------------------");
         System.out.print("이름 : ");
-        String ordererName = sc.nextLine();
+        String ordererName = sc.next();
+        sc.nextLine();
         System.out.print("주소 : ");
         String ordererAddress = sc.nextLine();
 
@@ -61,7 +89,7 @@ public class OrderView {
             int quantity = sc.nextInt();
 
             // OrderItem객체 처리
-            orderItemList.add(new OrderItemDto(0, 0, bookId, quantity));
+            orderItemList.add(new OrderItemDto(0, 0, bookId, quantity, null));
 
             // 추가 주문 여부
             System.out.print("추가적으로 주문하시겠습니까? (y/n) : ");
@@ -74,16 +102,9 @@ public class OrderView {
         // 확인용
         System.out.println(ordererName + " " +  ordererAddress + " ");
         // 주문요청 (OrderController 메시지 전달)
-        OrderDto orderDto = new OrderDto(0, ordererName,ordererAddress, null, Status.주문확인중, orderItemList);
+        OrderDto orderDto = new OrderDto(0, ordererName,ordererAddress, null, 주문확인중, orderItemList);
         orderController.createOrder(orderDto);
         System.out.println("주문번호 : " + orderDto.getOrderId());
-    }
-
-    private void findOrderByStatus() {
-        System.out.println("    [주문 상태 조회] ");
-        System.out.println("---------------------");
-        System.out.print("주문 상태 : ");
-//        for ()
     }
 
     private void findByOrderId() {
