@@ -226,9 +226,17 @@ public class OrderView {
             System.out.println("주문일: " + order.getOrderDate());
             System.out.println("상태: " + order.getStatus());
             System.out.println("주문 목록:");
+//            for (int i = 0; i < order.getOrderItemList().size(); i++) {
+//                OrderItemDto item = order.getOrderItemList().get(i);
+//                System.out.printf("%d. %s (도서번호 %d번) %d권\n", i + 1, item.getBookdto().getTitle(),item.getBookId(), item.getQuantity() );
+//            }
             for (int i = 0; i < order.getOrderItemList().size(); i++) {
                 OrderItemDto item = order.getOrderItemList().get(i);
-                System.out.printf("%d. %s (도서번호 %d번) %d권\n", i + 1, item.getBookdto().getTitle(),item.getBookId(), item.getQuantity() );
+                if (item.getBookdto() != null) {
+                    System.out.printf("%d. %s (도서번호 %d번) %d권\n", i + 1, item.getBookdto().getTitle(), item.getBookId(), item.getQuantity());
+                } else {
+                    System.out.printf("%d. (도서 정보 없음) 도서번호 %d번 %d권\n", i + 1, item.getBookId(), item.getQuantity());
+                }
             }
         }
     }

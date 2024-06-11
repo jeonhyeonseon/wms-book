@@ -1,6 +1,5 @@
 package com.sh.order.model.dao;
 
-import com.sh.book.model.dao.BookMapper;
 import com.sh.order.model.dto.OrderDto;
 import com.sh.order.model.dto.OrderItemDto;
 import com.sh.order.model.dto.Status;
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import static com.sh.common.MyBatisTemplate.getSqlSession;
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,4 +76,29 @@ class OrderMapperTest {
 
 
     }
+
+    @DisplayName("상태별 주문 목록 조회")
+    @Test
+    void findOrdersByStatus() {
+        // Given: 주문 정보를 생성 및 삽입
+        // When: 주문 상태별로 주문 목록을 조회
+        List<OrderDto> orders = orderMapper.findOrdersByStatus(Status.ORDER_CONFIRMING.getValue());
+
+        // Then: 조회 결과 확인
+        assertNotNull(orders, "주문 목록은 null이 아니어야 합니다.");
+        assertTrue(orders.stream().allMatch(order -> order.getStatus() == Status.ORDER_CONFIRMING), "모든 주문의 상태는 ORDER_CONFIRMING이어야 합니다.");
+    }
+
+    @DisplayName("주문번호로 주문 정보 조회")
+    @Test
+    void findOrderById() {
+        // Given: 주문 정보를 생성 및 삽입
+
+        int orderId = 1;
+        // When: 주문 번호로 주문 정보를 조회
+        OrderDto retrievedOrder = orderMapper.findOrderById(orderId);
+        // Then: 조회 결과 확인
+        assertNotNull(retrievedOrder, "조회된 주문 정보는 null이 아니어야 합니다.");
+    }
+
 }

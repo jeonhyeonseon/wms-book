@@ -2,45 +2,34 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sh.order.model.dao.OrderMapper">
-    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="orderId">
-        insert into
-        tbl_order (order_id, orderer_name,orderer_address,order_date,status)
-        values (
-        #{orderId},#{orderName},#{orderAddress},#{orderDate},#{status.value}
-        )
-    </insert>
-    <insert id="insertOrderItem" useGeneratedKeys="true" keyProperty="orderItemId">
-        insert into
-        tbl_order_item (order_item_id,order_id,book_id,quantity)
-        values (
-        #{orderItemId}, #{orderId},#{bookId},#{quantity}
-        )
-    </insert>
-
-    <!-- 상태별 주문 목록 조회 -->
-    <select id="findOrdersByStatus" parameterType="string" resultMap="orderDtoMap">
-        SELECT
-        o.*,
-        i.*,
-        b.*
+<mapper namespace="com.sh.order.model.dao.inventoryMapper">
+<!--    주문서의 orderId를 이용하여 OrderDto를 가져오는 쿼리-->
+    <select id="selectOrderById" resultMap="InventoryDtoMap" parameterType="int">
+        SELECT o.*,oi.*,b.*,i.*
         FROM tbl_order o
-        LEFT JOIN tbl_order_item i ON o.order_id = i.order_id
-        LEFT JOIN tbl_book b ON i.book_id = b.book_id
-        WHERE o.status = #{status}
-    </select>
-
-    <!-- 주문번호로 주문 정보 조회 -->
-    <select id="findOrderById" parameterType="int" resultMap="orderDtoMap">
-        SELECT o.*, i.*, b.*
-        FROM tbl_order o
-        LEFT JOIN tbl_order_item i ON o.order_id = i.order_id
-        LEFT JOIN tbl_book b ON i.book_id = b.book_id
+        LEFT JOIN tbl_order_item oi ON o.order_id = oi.order_id
+        LEFT JOIN tbl_book b ON oi.book_id = b.book_id
+        LEFT JOIN tbl_inventory i ON b.book_id = i.book_id
         WHERE o.order_id = #{orderId}
     </select>
+<!--    재고수량 업데이트하는 쿼리-->
+    <update id="updateInventoryQuantity" parameterType="map">
+        UPDATE tbl_inventory
+        SET quantity = quantity - #{quantity}
+        WHERE book_id = #{bookId}
+    </update>
+<!--    주문 상태를 업데이트하는 쿼리-->
+    <update id="updateOrderStatus" parameterType="int">
+        UPDATE tbl_order
+        SET status = 'DELIVERED'
+        WHERE order_id = #{orderId}
+    </update>
 
 
-    <resultMap id="orderDtoMap" type="orderDto">
+
+
+
+    <resultMap id="InventoryDtoMap" type="inventoryDto">
         <!-- id - PK컬럼 매핑용 -->
         <id column="order_id" property="orderId"/>
         <!-- result : 그외 컬럼 매핑용 -->
@@ -65,8 +54,18 @@
                 <result column="price" property="price"/>
                 <result column="category" property="category"/>
                 <result column="created_at" property="createdAt"/>
+
+                <!-- 새로 추가된 tbl_inventory와의 연관 관계 매핑 -->
+                <association property="inventory" javaType="inventoryDto">
+                    <id column="inventory_id" property="inventoryId"/>
+                    <result column="book_id" property="bookId"/>
+                    <result column="quantity" property="quantity"/>
+                    <result column="location" property="location"/>
+                    <result column="last_updated" property="lastUpdated"/>
+                </association>
             </association>
         </collection>
     </resultMap>
+
 
 </mapper>

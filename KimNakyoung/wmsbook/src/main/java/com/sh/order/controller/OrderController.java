@@ -33,7 +33,7 @@ public class OrderController {
     }
 
     public List<OrderDto> findOrdersByStatus(Status status) {
-        return orderService.findOrdersByStatus(status.name());
+        return orderService.findOrdersByStatus(status.getValue());
     }
 
     public OrderDto findOrderById(int orderId) {
