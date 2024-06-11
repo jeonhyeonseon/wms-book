@@ -18,6 +18,8 @@ public class Book {
     private String description;
     private int price;
     private String category;
-    private LocalDateTime bookCreatedAt;
+    private LocalDateTime createdAt;
+
+
 
 }

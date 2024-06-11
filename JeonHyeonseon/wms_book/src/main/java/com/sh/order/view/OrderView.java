@@ -93,7 +93,7 @@ public class OrderView {
 
             // 추가 주문 여부
             System.out.print("추가적으로 주문하시겠습니까? (y/n) : ");
-            if(sc.next().toUpperCase().charAt(0) != 'y') {
+            if(sc.next().toUpperCase().charAt(0) != 'Y') {
                 break;
             }
             // 확인용

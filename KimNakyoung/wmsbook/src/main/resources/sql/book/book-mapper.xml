@@ -33,4 +33,33 @@
         from tbl_book
         where price = #{price} ;
     </select>
+<!--    도서등록 메서드 맵퍼-->
+    <insert id="insertBook" useGeneratedKeys="true" keyProperty="bookId">
+        insert into
+            tbl_book
+        values (
+            null,#{title} , #{author},#{description}, #{price},#{category},NOW()
+        )
+    </insert>
+<!--도서삭제 메서드 -->
+    <delete id="deleteBook">
+        delete from tbl_book where book_id = #{bookId}
+    </delete>
+    <update id="updateBook">
+        update tbl_book
+        set
+        title = #{title},
+        author = #{author},
+        description = #{description},
+        price = #{price},
+        category = #{category}
+        where
+        book_id = #{bookId}
+    </update>
+    <select id="findByBookIdList" parameterType="map" resultType="BookDto">
+        select *
+        from tbl_book
+        where book_id = #{bookId} ;
+    </select>
+
 </mapper>

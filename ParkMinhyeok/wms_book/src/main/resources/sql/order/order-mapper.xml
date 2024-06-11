@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.order.model.dao.OrderMapper">
+    <resultMap id="orderDtoMap" type="com.sh.order.model.dto.OrderDto">
+        <id column="order_id" property="orderId"/>
+        <result column="orderer_name" property="ordererName"/>
+        <result column="orderer_address" property="ordererAddress"/>
+        <result column="order_date" property="orderDate"/>
+    </resultMap>
+
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="orderId">
+        INSERT INTO
+        tbl_order (orderer_name, orderer_address, order_date, status)
+        VALUES (
+            #{ordererName}, #{ordererAddress}, #{orderDate}, #{status}
+        )
+    </insert>
+
+    <insert id="insertOrderItem">
+        INSERT INTO
+        tbl_order_item (order_item_id, order_id, book_id, quantity)
+        VALUES (
+        #{orderItemId}, #{orderId}, #{bookId}, #{quantity}
+        )
+    </insert>
+</mapper>

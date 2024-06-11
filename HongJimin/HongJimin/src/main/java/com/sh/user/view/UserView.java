@@ -1,6 +1,5 @@
 package com.sh.user.view;
 
-
 import com.sh.book.view.BookView;
 import com.sh.common.AuthManager;
 import com.sh.inventory.view.InventoryView;
@@ -16,10 +15,10 @@ public class UserView {
     private InventoryView inventoryView = new InventoryView();
     private OrderView orderView = new OrderView();
 
-
     public void userMenu() {
         while (true) {
             String mainMenu = """
+                    ========================
                       ✅메뉴를 선택해주세요✅
                     ========================
                          1. 도서 관리

@@ -12,9 +12,9 @@
     </insert>
     <insert id="insertOrderItem">
         insert into
-            tbl_order_item (order_item_id, order_id, book_id, quantity)
+            tbl_order_item (order_id, book_id, quantity)
         values (
-            #{order_item_id}, #{order_id}, #{bookId} #{quantity}
+            #{orderId}, #{bookId}, #{quantity}
         )
     </insert>
     <select id="findOrderByStatus" resultMap="orderDtoMap">
@@ -41,7 +41,17 @@
         where
             o.order_id = #{orderId}
     </select>
-    <resultMap id="orderDtoMap" type="com.sh.order.model.dto.OrderDto">
+    <resultMap id="bookDto" type="bookDto">
+        <id column="book_id" property="bookId"/>
+        <result column="title" property="title"/>
+        <result column="author" property="author"/>
+        <result column="description" property="description"/>
+        <result column="price" property="price"/>
+        <result column="category" property="category"/>
+        <result column="created_at" property="createdAt"/>
+    </resultMap>
+
+    <resultMap id="orderDtoMap" type="orderDto">
         <!-- orderId : PK컬럼 매핑용 -->
         <id column="order_id" property="orderId"/>
         <!-- result : 그외 컬럼 매핑용 -->

@@ -1,9 +1,11 @@
 package com.sh.order.model.dto;
 
 import com.sh.order.model.entity.Status;
+import com.sh.order_item.model.dto.OrderItemDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -12,7 +14,9 @@ import java.time.LocalDateTime;
 @ToString
 public class OrderDto {
     private int orderId;
-    private int userId;
+    private String ordererName;
+    private String ordererAddress;
     private LocalDateTime orderDate;
     private Status status;
+    public List<OrderItemDto> orderItemList;
 }

@@ -38,7 +38,19 @@ public class BookResultView {
         }
     }
 
+    public static void displayResult(String type, int result) {
+        System.out.println(type + " " + (result > 0 ? "성공" : "실패!"));
 
+    }
 
-
+    public static void displayDeleteResult(String type, int result) {
+        if (result > 0) {
+            System.out.println(type + " 성공");
+        } else if (result == -1) {
+            System.out.println(type + " 실패! 해당 도서는 다른 기록에 참조되어 삭제할 수 없습니다.");
+            System.out.println("31번 이상을 입력해주세요.");
+        } else {
+            System.out.println(type + " 실패!");
+        }
+    }
 }

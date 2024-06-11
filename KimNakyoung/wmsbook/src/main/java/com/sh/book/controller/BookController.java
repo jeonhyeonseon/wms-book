@@ -38,4 +38,28 @@ public class BookController {
         List<BookDto> list = bookService.findByPrice(price);
         BookResultView.displayBookList(list,"🐥가격 : "+price + "의 목록입니다.🐥");
     }
+
+    // 도서 등록
+    public void insertBook(BookDto bookDto) {
+        int result = bookService.insertBook(bookDto);
+        BookResultView.displayResult("도서 등록",result);
+    }
+
+    public void deleteBook(int bookId) {
+        int result = bookService.deleteBook(bookId);
+        BookResultView.displayDeleteResult("도서 삭제",result);
+    }
+    // 수정
+    public void updateBook(BookDto bookDto) {
+        int result = bookService.updateBook(bookDto);
+        BookResultView.displayResult("도서 수정",result);
+
+    }
+
+    public List<BookDto> findByBookIdList(int bookId) {
+        List<BookDto> list = bookService.findByBookIdList(bookId);
+        BookResultView.displayBookList(list,"도서코드 : "+ bookId + "의 목록입니다.");
+        return list;
+    }
+    // 리스트로 반환하자.
 }

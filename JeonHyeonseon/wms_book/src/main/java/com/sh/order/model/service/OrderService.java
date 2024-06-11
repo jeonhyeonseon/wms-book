@@ -19,14 +19,15 @@ public class OrderService {
             int result = orderMapper.insertOrder(orderDto);
             // n건 주문등록
             for (OrderItemDto orderItemDto : orderDto.getOrderItemList()) {
-                orderItemDto.setOrderItemId(orderDto.getOrderId());
+                // 발급된 도서아이디를 OrderItemDto#bookId 대입
+                orderItemDto.setOrderId(orderDto.getOrderId());
                 result = orderMapper.insertOrderItem(orderItemDto);
             }
             sqlSession.commit();
             return result;
         } catch (Exception e) {
             sqlSession.rollback(); // 실패하면 rollback
-            throw new RuntimeException(e);
+            throw new RuntimeException("주문을 실패하셨습니다.");
         } finally {
             sqlSession.close();
         }

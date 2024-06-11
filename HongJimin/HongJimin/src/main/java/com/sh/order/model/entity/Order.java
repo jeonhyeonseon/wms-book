@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +18,15 @@ public class Order {
     private String ordererAddress;
     private LocalDateTime orderDate;
     private Status status;
+
+    private List<OrderItem> orderItemList;
+
+
+    public Order(int orderId, String ordererName, String ordererAddress, LocalDateTime orderDate, Status status) {
+        this.orderId = orderId;
+        this.ordererName = ordererName;
+        this.ordererAddress = ordererAddress;
+        this.orderDate = orderDate;
+        this.status = status;
+    }
 }
