@@ -45,7 +45,8 @@ public class OrderView {
         System.out.println("  [ 주문자 정보 입력 ]");
         System.out.println("---------------------");
         System.out.print("이름 : ");
-        String ordererName = sc.nextLine();
+        String ordererName = sc.next();
+        sc.nextLine();
         System.out.print("주소 : ");
         String ordererAddress = sc.nextLine();
 
@@ -65,7 +66,7 @@ public class OrderView {
 
             // 추가 주문 여부
             System.out.print("추가적으로 주문하시겠습니까? (y/n) : ");
-            if(sc.next().toUpperCase().charAt(0) != 'y') {
+            if(sc.next().toUpperCase().charAt(0) != 'Y') {
                 break;
             }
             // 확인용

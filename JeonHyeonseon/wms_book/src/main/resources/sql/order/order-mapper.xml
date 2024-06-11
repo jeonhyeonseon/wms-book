@@ -12,9 +12,9 @@
     </insert>
     <insert id="insertOrderItem">
         insert into
-            tbl_order_item (order_item_id, order_id, book_id, quantity)
+            tbl_order_item (order_id, book_id, quantity)
         values (
-            #{orderItemId}, #{orderId}, #{bookId}, #{quantity}
+            #{orderId}, #{bookId}, #{quantity}
         )
     </insert>
     <select id="findByOrderId" resultMap="orderDtoMap">
@@ -30,7 +30,7 @@
             o.order_id = #{orderId}
     </select>
 
-    <resultMap id="bookDto" type="bookDot">
+    <resultMap id="bookDto" type="bookDto">
         <id column="book_id" property="bookId"/>
         <result column="title" property="title"/>
         <result column="author" property="author"/>
